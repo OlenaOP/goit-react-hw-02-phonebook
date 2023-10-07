@@ -22,6 +22,13 @@ export class App extends Component {
     evt.preventDefault();
     const form = evt.currentTarget;
     const name = form.elements.name.value;
+    const hasNameDublicate = this.state.contacts.some(
+      contact => contact.name === name
+    );
+    if (hasNameDublicate) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
     const number = form.elements.number.value;
     const nameID = nanoid();
     const arr = this.state.contacts;
