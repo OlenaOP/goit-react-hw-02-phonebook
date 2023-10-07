@@ -47,6 +47,16 @@ export class App extends Component {
     this.setState({ filter: evt.target.value });
   };
 
+  handleDelete = contactName => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(
+          contact => contact.name !== contactName
+        ),
+      };
+    });
+  };
+
   render() {
     const filter = this.state.filter;
 
@@ -65,6 +75,7 @@ export class App extends Component {
         <List
           title="Contacts"
           contacts={dataSearch(filter, this.state.contacts)}
+          handleDeleteBook={this.handleDelete}
           // contacts={this.state.contacts.filter(user => {
           //   return user.name.toLowerCase().includes(filter.toLowerCase());
           // })}

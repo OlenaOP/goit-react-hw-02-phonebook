@@ -1,4 +1,4 @@
-export const List = ({ title, contacts }) => {
+export const List = ({ title, contacts, handleDeleteBook }) => {
   return (
     <>
       <h1>{title}</h1>
@@ -6,7 +6,13 @@ export const List = ({ title, contacts }) => {
         {contacts.map(contact => {
           return (
             <li key={contact.id}>
-              {contact.name}: {contact.number}
+              {contact.name}: {contact.number}{' '}
+              <button
+                type="button"
+                onClick={() => handleDeleteBook(contact.name)}
+              >
+                Delete
+              </button>
             </li>
           );
         })}
