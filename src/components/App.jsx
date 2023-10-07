@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 //model.id = nanoid();
 
 import { List } from './List/List';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
 import css from './App.module.css';
 
 export class App extends Component {
@@ -41,60 +43,24 @@ export class App extends Component {
   render() {
     const filter = this.state.filter;
 
-    const dataSearch = e => {
-      const value = e.target.value.toLowerCase();
-
-      const filter = data.filter(user => {
-        return user.name.toLowerCase().includes(value);
+    const dataSearch = (filter, contacts) => {
+      return this.state.contacts.filter(user => {
+        return user.name.toLowerCase().includes(filter.toLowerCase());
       });
     };
 
     return (
       <div>
         <h1>Phonebook</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
-            <input
-              type="text"
-              name="name"
-              className={css.formNameInput}
-              required
-              // value={this.state.name}
-              // onChange={(e) => this.setState({ name: e.target.value })}
-            />
-          </label>
-          <label>
-            Number
-            <input
-              className={css.formNameInput}
-              type="tel"
-              name="number"
-              required
-            />
-          </label>
-          <button className={css.formBtn} type="submit">
-            Add contact
-          </button>
-        </form>
+        <ContactForm handleSubmit={this.handleSubmit} />
         <h2>Contacts</h2>
-        <label>
-          Find contacts by name
-          <input
-            className={css.formNameInput}
-            type="text"
-            name="filter"
-            value={filter}
-            onChange={this.handleChange}
-          />
-        </label>
+        <Filter filter={filter} handleChange={this.handleChange} />
         <List
           title="Contacts"
-          contacts={this.state.contacts.filter(user => {
-            return user.name.toLowerCase().includes(filter.toLowerCase());
-          })}
-          // options={Object.keys(this.state)}
-          // onLeaveFeedback={this.onLeaveFeedback}
+          contacts={dataSearch(filter, this.state.contacts)}
+          // contacts={this.state.contacts.filter(user => {
+          //   return user.name.toLowerCase().includes(filter.toLowerCase());
+          // })}
         ></List>
       </div>
     );
