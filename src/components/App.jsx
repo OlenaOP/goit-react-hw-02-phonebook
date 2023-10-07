@@ -7,8 +7,13 @@ import css from './App.module.css';
 
 export class App extends Component {
   state = {
-    contacts: [],
-    name: '',
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
   };
 
   handleSubmit = evt => {
@@ -29,7 +34,21 @@ export class App extends Component {
     form.reset();
   };
 
+  handleChange = evt => {
+    this.setState({ filter: evt.target.value });
+  };
+
   render() {
+    const filter = this.state.filter;
+
+    const dataSearch = e => {
+      const value = e.target.value.toLowerCase();
+
+      const filter = data.filter(user => {
+        return user.name.toLowerCase().includes(value);
+      });
+    };
+
     return (
       <div>
         <h1>Phonebook</h1>
@@ -58,9 +77,22 @@ export class App extends Component {
             Add contact
           </button>
         </form>
+        <h2>Contacts</h2>
+        <label>
+          Find contacts by name
+          <input
+            className={css.formNameInput}
+            type="text"
+            name="filter"
+            value={filter}
+            onChange={this.handleChange}
+          />
+        </label>
         <List
           title="Contacts"
-          contacts={this.state.contacts}
+          contacts={this.state.contacts.filter(user => {
+            return user.name.toLowerCase().includes(filter.toLowerCase());
+          })}
           // options={Object.keys(this.state)}
           // onLeaveFeedback={this.onLeaveFeedback}
         ></List>
