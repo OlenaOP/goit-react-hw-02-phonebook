@@ -15,14 +15,16 @@ export class App extends Component {
     evt.preventDefault();
     const form = evt.currentTarget;
     const name = form.elements.name.value;
+    const number = form.elements.number.value;
     const nameID = nanoid();
     const arr = this.state.contacts;
     arr.push({
       id: nameID,
       name: name,
+      number: number,
     });
     console.log(arr);
-    console.log(name, nameID);
+    console.log(name, nameID, number);
     this.setState({ contacts: arr });
     form.reset();
   };
@@ -41,6 +43,15 @@ export class App extends Component {
               required
               // value={this.state.name}
               // onChange={(e) => this.setState({ name: e.target.value })}
+            />
+          </label>
+          <label>
+            Number
+            <input
+              className={css.formNameInput}
+              type="tel"
+              name="number"
+              required
             />
           </label>
           <button className={css.formBtn} type="submit">
